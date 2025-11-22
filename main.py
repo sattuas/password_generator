@@ -1,45 +1,97 @@
+from tkinter import *
+from tkinter.ttk import *
 from models.generator import PasswordGenerator
 
 
-def confirm_option(text):
-    option = ''
-    while True:
-        option = str(input(f'{text} [Y/n] ')).strip()[0]
-        if option in 'Yy':
-            return True
-        elif option in 'Nn':
-            return False
+def get_password():
+    first_password()
+    
+    try:
+        pw = PasswordGenerator(16,
+                            uppercase_letters.get(),
+                            lowercase_letters.get(),
+                            symbols.get(),
+                            digits.get())
 
-print("===== PASSWORD GENERATOR ======")
-
-letter_upper = False
-letter_lower = False
-symbols = False
-numbers = False
+        message.set(pw.generate())
+    except IndexError as e:
+        print(f'Error! {e}')
 
 
-while True:
-    print("[ 1 ] GERAR SENHA")
-    print("[ 0 ] SAIR")
-    option = int(input("Input your option: "))
-
-    match option:
-        case 1:
-            letter_upper = confirm_option("capital letters?")
-            letter_lower = confirm_option("lower letters?")
-            symbols = confirm_option("symbols?")
-            numbers = confirm_option("numbers?")
-
-            print("generating password...")
-            pw = PasswordGenerator(16, letter_upper, letter_lower, symbols, numbers)
-            print(f'generated password: {pw.generate()}')
-        case 0:
-            print("closing...")
-            break
-        case _:
-            print("error! invalid option")
+def copy_clipboard():
+    root.clipboard_clear()
+    root.clipboard_append(message.get())
+    root.update()
+    flash.set("copied to clipboard!")
+    root.after(600, lambda: flash.set(""))
 
 
-# pw = PasswordGenerator(16, True, True, True, True)
+def first_password():
+    global firstpw  
+    if firstpw == False:
+        copy.configure(state="normal")
+        firstpw = True
 
-# print(f'senha gerada: {pw.generate()}')
+
+firstpw = False
+
+root = Tk()
+root.title("Password Generator")
+root.geometry("500x200")
+
+result = Frame(root)
+
+uppercase_letters = IntVar()
+lowercase_letters = IntVar()
+symbols = IntVar()
+digits = IntVar()
+
+flash = StringVar()
+message = StringVar()
+message.set("Password will be show here")
+
+title = Label(root, text="GENERATE A PASSWORD", font=50)
+button = Button(root, text="Generate", command=get_password)
+show_password = Label(result, textvariable=message)
+copy = Button(result, text="Copy", command=copy_clipboard, state="disabled")
+flash_lbl = Label(root, textvariable=flash)
+checkbuttons_frame = Frame(root)
+
+Upper = Checkbutton(checkbuttons_frame,
+                    text="Upper A-Z",
+                    variable=uppercase_letters,
+                    onvalue=1,
+                    offvalue=0)
+Lower = Checkbutton(checkbuttons_frame,
+                    text="Lower a-z",
+                    variable=lowercase_letters,
+                    onvalue=1,
+                    offvalue=0)
+Symbols = Checkbutton(checkbuttons_frame,
+                      text="Symbols @#!..",
+                      variable=symbols,
+                      onvalue=1,
+                      offvalue=0)
+Digits = Checkbutton(checkbuttons_frame,
+                     text="Digits 0-9",
+                     variable=digits,
+                     onvalue=1,
+                     offvalue=0)
+
+title.pack(pady=15)
+
+checkbuttons_frame.pack(pady=(0, 20))
+Upper.pack(side="left", padx=10)
+Lower.pack(side="left", padx=10)
+Symbols.pack(side="left", padx=10)
+Digits.pack(side="left", padx=10)
+
+button.pack(pady=(0, 20))
+result.pack()
+show_password.pack(side="left")
+copy.pack(side="right")
+flash_lbl.pack()
+
+root.resizable(False, False)
+
+root.mainloop()
