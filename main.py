@@ -37,7 +37,10 @@ firstpw = False
 
 root = Tk()
 root.title("Password Generator")
-root.geometry("500x200")
+root.geometry("500x300")
+
+img = PhotoImage(file="assets/images/chibi_coding2.png")
+# img = img.subsample(5, 5)
 
 result = Frame(root)
 
@@ -50,11 +53,25 @@ flash = StringVar()
 message = StringVar()
 message.set("Password will be show here")
 
-title = Label(root, text="GENERATE A PASSWORD", font=50)
-button = Button(root, text="Generate", command=get_password)
-show_password = Label(result, textvariable=message)
-copy = Button(result, text="Copy", command=copy_clipboard, state="disabled")
-flash_lbl = Label(root, textvariable=flash)
+title = Label(root,
+              text="GENERATE A PASSWORD",
+              font=50)
+
+button = Button(root,
+                text="Generate",
+                command=get_password)
+
+show_password = Label(result,
+                      textvariable=message)
+
+copy = Button(result,
+              text="Copy",
+              command=copy_clipboard,
+              state="disabled")
+
+flash_lbl = Label(root,
+                  textvariable=flash)
+
 checkbuttons_frame = Frame(root)
 
 Upper = Checkbutton(checkbuttons_frame,
@@ -62,21 +79,26 @@ Upper = Checkbutton(checkbuttons_frame,
                     variable=uppercase_letters,
                     onvalue=1,
                     offvalue=0)
+
 Lower = Checkbutton(checkbuttons_frame,
                     text="Lower a-z",
                     variable=lowercase_letters,
                     onvalue=1,
                     offvalue=0)
+
 Symbols = Checkbutton(checkbuttons_frame,
                       text="Symbols @#!..",
                       variable=symbols,
                       onvalue=1,
                       offvalue=0)
+
 Digits = Checkbutton(checkbuttons_frame,
                      text="Digits 0-9",
                      variable=digits,
                      onvalue=1,
                      offvalue=0)
+
+image_lbl = Label(root, image=img)
 
 title.pack(pady=15)
 
@@ -91,6 +113,8 @@ result.pack()
 show_password.pack(side="left")
 copy.pack(side="right")
 flash_lbl.pack()
+
+image_lbl.pack()
 
 root.resizable(False, False)
 
