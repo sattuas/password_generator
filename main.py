@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.ttk import *
 from models.generator import PasswordGenerator
+import webbrowser
 
 
 def get_password():
@@ -33,11 +34,15 @@ def first_password():
         firstpw = True
 
 
+def open_link(event):
+    webbrowser.open("https://github.com/")
+
+
 firstpw = False
 
 root = Tk()
 root.title("Password Generator")
-root.geometry("500x300")
+root.geometry("500x320")
 
 img = PhotoImage(file="assets/images/chibi_coding2.png")
 # img = img.subsample(5, 5)
@@ -55,7 +60,7 @@ message.set("Password will be show here")
 
 title = Label(root,
               text="GENERATE A PASSWORD",
-              font=50)
+              font=("Arial", 16, "bold"))
 
 button = Button(root,
                 text="Generate",
@@ -100,6 +105,9 @@ Digits = Checkbutton(checkbuttons_frame,
 
 image_lbl = Label(root, image=img)
 
+credit = Label(root, text="Made by")
+credit_link = Label(root, text="Sattua :)", foreground="blue", cursor="hand2")
+
 title.pack(pady=15)
 
 checkbuttons_frame.pack(pady=(0, 20))
@@ -115,6 +123,11 @@ copy.pack(side="right")
 flash_lbl.pack()
 
 image_lbl.pack()
+
+credit.pack()
+credit_link.pack()
+
+credit_link.bind("<Button-1>", open_link)
 
 root.resizable(False, False)
 
