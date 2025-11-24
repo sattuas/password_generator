@@ -35,7 +35,7 @@ def first_password():
 
 
 def open_link(event):
-    webbrowser.open("https://github.com/")
+    webbrowser.open("https://github.com/sattuas")
 
 
 firstpw = False
