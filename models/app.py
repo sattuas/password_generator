@@ -54,10 +54,32 @@ class PasswordApp:
     
 
     def get_password(self):
-        ...
+        try:
+            gen = PasswordGenerator(
+                16,
+                self.uppercase.get(),
+                self.lowercase.get(),
+                self.symbols.get(),
+                self.digits.get()
+            )
+            self.message.set(gen.generate())
+            
+            if not self.first_password_generated:
+                self.copy_btn.configure(state="normal")
+                self.first_password_generated = True
+
+        except IndexError as e:
+            print(f'Error generating password: {e}')
 
     def copy_clipboard(self):
-        ...
+        pw = self.message.get()
+        
+        self.root.clipboard_clear()
+        self.root.clipboard_append(pw)
+        self.root.update()
+
+        self.flash.set("Copied to Clipboard!")
+        self.root.after(600, lambda: self.flash.set(""))
 
         
 if __name__ == "__main__":
