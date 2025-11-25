@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from generator import PasswordGenerator
+from .generator import PasswordGenerator
 import webbrowser
 
 
@@ -53,11 +53,11 @@ class PasswordApp:
         
         self.image_lbl.pack()
 
-        ttk.Label(root, text="Made by").pack()
+        ttk.Label(self.root, text="Made by").pack()
 
-        self.credit_link = ttk.Label(root, text="Sattua :)", foreground="blue", cursor="hand2")
+        self.credit_link = ttk.Label(self.root, text="Sattua :)", foreground="blue", cursor="hand2")
         self.credit_link.pack()
-        
+
         self.credit_link.bind("<Button-1>", self.open_link)
     
 
