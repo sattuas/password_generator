@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from generator import PasswordGenerator
+import webbrowser
 
 
 class PasswordApp:
@@ -51,6 +52,13 @@ class PasswordApp:
         ttk.Label(self.root, textvariable=self.flash).pack()
         
         self.image_lbl.pack()
+
+        ttk.Label(root, text="Made by").pack()
+
+        self.credit_link = ttk.Label(root, text="Sattua :)", foreground="blue", cursor="hand2")
+        self.credit_link.pack()
+        
+        self.credit_link.bind("<Button-1>", self.open_link)
     
 
     def get_password(self):
@@ -80,6 +88,9 @@ class PasswordApp:
 
         self.flash.set("Copied to Clipboard!")
         self.root.after(600, lambda: self.flash.set(""))
+
+    def open_link(self, event):
+        webbrowser.open("https://github.com/sattuas")
 
         
 if __name__ == "__main__":
