@@ -13,10 +13,10 @@ class PasswordApp:
 
         self.first_password_generated = False
 
-        self.uppercase = tk.IntVar()
-        self.lowercase = tk.IntVar()
-        self.symbols = tk.IntVar()
-        self.digits = tk.IntVar()
+        self.uppercase = tk.IntVar(value=1)
+        self.lowercase = tk.IntVar(value=1)
+        self.symbols = tk.IntVar(value=1)
+        self.digits = tk.IntVar(value=1)
 
         self.flash = tk.StringVar()
         self.message = tk.StringVar(value="Password will be shown here")

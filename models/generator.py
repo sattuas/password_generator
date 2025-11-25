@@ -68,7 +68,7 @@ class PasswordGenerator:
                 return False
         
         return True
-            
+
 
 if __name__ == "__main__":
     pw = PasswordGenerator(16, True, False, True, True)
